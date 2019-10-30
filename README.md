@@ -22,5 +22,5 @@
     ```
   - To generate multiple reports
     ```sh 
-    python3 weatherman.py /path/to/extract -c 2011/03 -a 2011/3 -e 2011
+    python3 weatherman.py path/to/extract -c 2011/03 -a 2011/3 -e 2011
     ```
