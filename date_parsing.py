@@ -1,5 +1,4 @@
 import calendar
-import datetime
 
 
 def get_year_month(_input):
@@ -10,7 +9,7 @@ def get_year_month(_input):
 
 
 def get_date_month(_input):
-    dt = datetime.datetime.strptime(_input, '%Y-%m-%d')
-    day = dt.day
-    month = calendar.month_name[dt.month]
+    splitted_input = _input.split('-')
+    month, day = splitted_input[1], splitted_input[2]
+    month = calendar.month_name[int(month)]
     return '{0} {1}'.format(month, day)

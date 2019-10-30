@@ -21,7 +21,7 @@ def display_average_values(path, _input):
 def calculate_average(formatted_data, key):
     values = [int(d[key]) for d in formatted_data if d[key] != '']
     average = sum(values)/len(values)
-    return average
+    return round(average, 2)
 
 
 def format_output(key, value):
