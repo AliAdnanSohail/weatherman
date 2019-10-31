@@ -20,12 +20,14 @@ def read_file(path, file_name):
     with open(file_path, 'r') as file:
         read_data = file.read()
         file.close()
-
     return read_data
 
 
 def format_file_data(data):
     rows = data.split('\n')
+    if rows[-1] == '':
+        rows.pop(-1)
+
     header = rows.pop(0).split(',')
     formatted_rows = []
     for row in rows:
@@ -34,5 +36,5 @@ def format_file_data(data):
         for i in range(len(row_data)):
             row_dict[header[i].strip()] = row_data[i]
         formatted_rows.append(row_dict)
-    formatted_rows.pop(-1)
+
     return formatted_rows

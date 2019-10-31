@@ -42,7 +42,11 @@ def display_highest_values(path, year):
 
 
 def format_output(row, key):
-    date = row['PKT']
+    if 'PKT' in row:
+        date = row['PKT']
+    else:
+        date = row['PKST']
+
     date = date_parsing.get_date_month(date)
     if key == 'Max TemperatureC':
         print('Highest:', row[key] + 'C on', date)
@@ -62,9 +66,8 @@ def get_max_rows(formatted_rows, key, reverse=False):
 
 def get_max(max_row, new_row, key):
     max_row_is_none = max_row is None
-    new_is_greater_than_max = int(new_row[key]) > int(max_row[key])
-    
-    if max_row_is_none or new_is_greater_than_max:
+
+    if max_row_is_none or int(new_row[key]) > int(max_row[key]):
         return new_row
     else:
         return max_row
@@ -72,9 +75,8 @@ def get_max(max_row, new_row, key):
 
 def get_min(min_row, new_row, key):
     min_row_is_none = min_row is None
-    new_is_less_than_min = int(new_row[key]) < int(min_row[key])
 
-    if min_row_is_none or new_is_less_than_min:
+    if min_row_is_none or int(new_row[key]) < int(min_row[key]):
         return new_row
     else:
         return min_row

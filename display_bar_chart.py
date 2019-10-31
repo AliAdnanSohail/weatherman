@@ -14,7 +14,10 @@ def display_bar_chart(path, _input):
 
 def display_chart(formatted_data):
     for d in formatted_data:
-        date = d['PKT'].split('-')[2]
+        if 'PKT' in d:
+            date = d['PKT'].split('-')[2]
+        else:
+            date = d['PKST'].split('-')[2]
 
         # Uncomment below code for separate bar
         # chart for max and mix temperature
