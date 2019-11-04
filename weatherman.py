@@ -1,29 +1,34 @@
 import sys
 
-import file_handling
-import display_highest
-import display_average
-import display_bar_chart
+import file_handler
+import highest_value_calculator
+import average_calculator
+import bar_chart_generator
 
 
 def main():
-    path = file_handling.extract_file(sys.argv[1])
-    print("Files extracted to /" + path)
+    file_path = sys.argv[1]
+    zip_name = 'weatherfiles.zip'
+    file_handler.extract_file(file_path, zip_name)
+    print("Files extracted to /" + file_path)
 
-    index = [i for i in [2, 4, 6] if i+1 < len(sys.argv)]
-    for i in index:
-        generate_report(path, sys.argv[i], sys.argv[i+1])
+    operation_indexes = [i for i in [2, 4, 6] if i+1 < len(sys.argv)]
+    for operation_index in operation_indexes:
+        duration_index = operation_index + 1
+        operation = sys.argv[operation_index]
+        duration = sys.argv[duration_index]
+        generate_report(file_path, operation, duration)
 
 
-def generate_report(path, operation, _input):
+def generate_report(file_path, operation, duration):
     if operation == '-e':
-        display_highest.display_highest_values(path, _input)
+        highest_value_calculator.display_highest(file_path, duration)
     elif operation == '-a':
-        display_average.display_average_values(path, _input)
+        average_calculator.display_average(file_path, duration)
     elif operation == '-c':
-        display_bar_chart.display_bar_chart(path, _input)
+        bar_chart_generator.display_bar_chart(file_path, duration)
     else:
-        print("Invalid input " + _input)
+        print('Invalid input {operation}'.format(operation=operation))
 
 
 main()
