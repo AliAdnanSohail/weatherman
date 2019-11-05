@@ -1,41 +1,26 @@
-import file_handler
-import date_parser
+from date_parser import DateParser
+from file_record import FileRecord
+from weatherman_helper import calculate_average, format_average_values_output
 
 
-def display_average(path, date):
-    date = date_parser.format_date(date, '%y_%M')
+class AverageCalculator(FileRecord):
+    def __init__(self, zip_file_ref, duration):
+        super().__init__(zip_file_ref, duration)
 
-    zip_dir_name = 'weatherfiles'
-    path = '{path}/{zip_dir_name}/'.format(path=path, zip_dir_name=zip_dir_name)
-    files = file_handler.filter_files(path, date)
-    if not files:
-        print('No data found for {date}'.format(date=date))
-        return
+    def display_average(self):
+        date = DateParser(self.duration, '%Y/%m').format_date(pattern='%y_%M')
 
-    formatted_data = file_handler.format_file_data(path, files[0])
+        files_name = self.get_files_name(date)
+        for file_name in files_name:
+            self.display_average_for_file(file_name)
 
-    avg_max_temp = calculate_average(formatted_data, 'Max TemperatureC')
-    avg_min_temp = calculate_average(formatted_data, 'Min TemperatureC')
-    avg_mean_humidity = calculate_average(formatted_data, 'Mean Humidity')
+    def display_average_for_file(self, file_name):
+        formatted_data = self.get_formatted_data(file_name)
 
-    print(format_output('Max TemperatureC', avg_max_temp))
-    print(format_output('Min TemperatureC', avg_min_temp))
-    print(format_output('Mean Humidity', avg_mean_humidity))
+        avg_max_temp = calculate_average(formatted_data, 'Max TemperatureC')
+        avg_min_temp = calculate_average(formatted_data, 'Min TemperatureC')
+        avg_mean_humidity = calculate_average(formatted_data, 'Mean Humidity')
 
-
-def calculate_average(formatted_data, key):
-    values = [int(d[key]) for d in formatted_data if d[key]]
-    average = sum(values) / len(values)
-    return round(average, 2)
-
-
-def format_output(key, value):
-    if key == 'Max TemperatureC':
-        output_string = 'Highest Average: {value}C'.format(value=value)
-    elif key == 'Min TemperatureC':
-        output_string = "Lowest Average: {value}C".format(value=value)
-    elif key == 'Mean Humidity':
-        output_string = "Average Mean Humidity: {value}%".format(value=value)
-    else:
-        output_string = 'Invalid key'
-    return output_string
+        print(format_average_values_output('Max TemperatureC', avg_max_temp))
+        print(format_average_values_output('Min TemperatureC', avg_min_temp))
+        print(format_average_values_output('Mean Humidity', avg_mean_humidity))
