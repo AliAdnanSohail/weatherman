@@ -1,6 +1,6 @@
 from date_parser import DateParser
-from file_record import FileRecord
-from weatherman_helper import calculate_average, format_average_values_output
+from values_calculator.file_record import FileRecord
+from helpers.weatherman_helper import calculate_average, format_average_values_output
 
 
 class AverageCalculator(FileRecord):

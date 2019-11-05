@@ -1,5 +1,5 @@
-from weatherman_helper import format_highest_values_output
-from file_record import FileRecord
+from helpers.weatherman_helper import format_highest_values_output
+from values_calculator.file_record import FileRecord
 
 
 class HighestValueCalculator(FileRecord):

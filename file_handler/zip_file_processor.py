@@ -3,7 +3,7 @@ import zipfile
 import fnmatch
 
 
-class ZipFile:
+class ZipFileProcessor:
     def __init__(self, path, zip_name, directory_name):
         self.path = path
         self.zip_name = zip_name

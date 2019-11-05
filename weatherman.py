@@ -1,16 +1,16 @@
 import sys
 
-from zip_file import ZipFile
-from highest_value_calculator import HighestValueCalculator
-from average_calculator import AverageCalculator
-from bar_chart_generator import BarChartGenerator
+from file_handler.zip_file_processor import ZipFileProcessor
+from values_calculator.highest_value_calculator import HighestValueCalculator
+from values_calculator.average_calculator import AverageCalculator
+from values_calculator.bar_chart_generator import BarChartGenerator
 
 
 def main():
     extract_to_path = sys.argv[1]
     zip_name = 'weatherfiles.zip'
     directory_name = 'weatherfiles'
-    zip_file = ZipFile(extract_to_path, zip_name, directory_name)
+    zip_file = ZipFileProcessor(extract_to_path, zip_name, directory_name)
     zip_file.extract_files()
     print("Files extracted to /" + zip_file.path)
 

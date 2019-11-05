@@ -1,6 +1,6 @@
-from weatherman_helper import display_bar_line
+from helpers.weatherman_helper import display_bar_line
 from date_parser import DateParser
-from file_record import FileRecord
+from values_calculator.file_record import FileRecord
 
 
 class BarChartGenerator(FileRecord):

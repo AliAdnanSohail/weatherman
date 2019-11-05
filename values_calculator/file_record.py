@@ -1,4 +1,4 @@
-from file_processor import FileProcessor
+from file_handler.file_processor import FileProcessor
 
 
 class FileRecord:
