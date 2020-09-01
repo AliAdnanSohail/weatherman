@@ -1,32 +1,34 @@
 import sys
 
-import file_handler
-import highest_value_calculator
-import average_calculator
-import bar_chart_generator
+from file_handler.zip_file_processor import ZipFileProcessor
+from values_calculator.highest_value_calculator import HighestValueCalculator
+from values_calculator.average_calculator import AverageCalculator
+from values_calculator.bar_chart_generator import BarChartGenerator
 
 
 def main():
-    file_path = sys.argv[1]
+    extract_to_path = sys.argv[1]
     zip_name = 'weatherfiles.zip'
-    file_handler.extract_file(file_path, zip_name)
-    print("Files extracted to /" + file_path)
+    directory_name = 'weatherfiles'
+    zip_file = ZipFileProcessor(extract_to_path, zip_name, directory_name)
+    zip_file.extract_files()
+    print("Files extracted to /" + zip_file.path)
 
     operation_indexes = [i for i in [2, 4, 6] if i+1 < len(sys.argv)]
     for operation_index in operation_indexes:
         duration_index = operation_index + 1
         operation = sys.argv[operation_index]
         duration = sys.argv[duration_index]
-        generate_report(file_path, operation, duration)
+        generate_report(zip_file, operation, duration)
 
 
-def generate_report(file_path, operation, duration):
+def generate_report(zip_file, operation, duration):
     if operation == '-e':
-        highest_value_calculator.display_highest(file_path, duration)
+        HighestValueCalculator(zip_file_ref=zip_file, duration=duration).display_highest()
     elif operation == '-a':
-        average_calculator.display_average(file_path, duration)
+        AverageCalculator(zip_file_ref=zip_file, duration=duration).display_average()
     elif operation == '-c':
-        bar_chart_generator.display_bar_chart(file_path, duration)
+        BarChartGenerator(zip_file_ref=zip_file, duration=duration).display_bar_chart()
     else:
         print('Invalid input {operation}'.format(operation=operation))
 
